@@ -1,19 +1,17 @@
-# Use official Python runtime as base image
 FROM python:3.12-slim
 
-# Set working directory in container
-WORKDIR /src
+# Container ke andar ek naya folder '/app' banayein
+WORKDIR /app
 
-# Copy requirements file
+# Sabse pehle requirements copy aur install karein
 COPY requirements.txt .
-
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY src ./src
-# Expose port 7860
-EXPOSE 7860
+# Ab local folder ka SARA maal (main.py aur src folder) copy karein
+COPY . .
 
-# Run the application
+# Python ko batayein ke modules /app ke andar dhoonde
+ENV PYTHONPATH=/src
+
+# App ko run karein
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
