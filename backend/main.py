@@ -190,7 +190,8 @@ async def global_exception_handler(request, exc):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",],  # Allow React dev server and other origins as needed
+        "https://hackathone-phase-2.vercel.app/",
+    ],  # Allow React dev server and other origins as needed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
