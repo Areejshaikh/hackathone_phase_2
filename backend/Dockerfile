@@ -1,18 +1,19 @@
-FROM python:3.9
+# Use official Python runtime as base image
+FROM python:3.12-slim
 
-# User setup (Hugging Face ki requirement hai)
-RUN useradd -m -u 1000 user
-USER user
-ENV PATH="/home/user/.local/bin:${PATH}"
+# Set working directory in container
+WORKDIR /src
 
-WORKDIR /app
+# Copy requirements file
+COPY requirements.txt .
 
-# Requirements install karein
-COPY --chown=user:user requirements.txt .
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Sara code copy karein
-COPY --chown=user:user . .
+# Copy application code
+COPY src ./src
+# Expose port 7860
+EXPOSE 7860
 
-# Port 7860 par backend start karein
+# Run the application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
