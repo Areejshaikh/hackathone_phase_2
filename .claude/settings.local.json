@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 10 uvicorn main:app --port 8001)"
+    ]
+  }
+}
