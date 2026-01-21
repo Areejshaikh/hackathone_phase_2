@@ -7,7 +7,7 @@ from jose import jwt, JWTError
 import os
 import time
 
-
+secrete_key = os.getenv("SECRET_KEY")
 class JWTMiddleware(BaseHTTPMiddleware):
     def __init__(self, app):
         super().__init__(app)
@@ -16,13 +16,13 @@ class JWTMiddleware(BaseHTTPMiddleware):
         load_dotenv()  # This will load the .env file
 
         # Use the same secret as the auth service for consistency
-        self.secret = os.getenv("SECRET_KEY", "uG4GOZ-kL2sN6ULOMSIZV_NKHx3KAW1LFffSSy5IjrY")
+        self.secret = secrete_key
         # For development purposes, provide a default secret if none is set
         # In production, this should always be set via environment variable
         if not self.secret:
             import warnings
             warnings.warn("SECRET_KEY not set, using default development secret. This is insecure for production!")
-            self.secret = "uG4GOZ-kL2sN6ULOMSIZV_NKHx3KAW1LFffSSy5IjrY"
+            self.secret = secrete_key
 
     async def dispatch(self, request: Request, call_next):
         # Skip authentication for public routes and static assets
